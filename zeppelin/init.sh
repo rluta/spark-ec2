@@ -1,0 +1,35 @@
+#!/bin/bash
+
+pushd /root > /dev/null
+
+if [ -d "zeppelin" ]; then
+  echo "Zeppelin seems to be installed. Exiting."
+  return 0
+fi
+
+# Github tag:
+if [[ "$ZEPPELIN_VERSION" == *\|* ]]
+then
+  # Not yet supported
+  echo "Zeppelin git hashes are not yet supported. Please specify a Zeppelin release version."
+# Pre-package zeppelin version
+else
+  case "$ZEPPELIN_VERSION" in
+    0.5.5)
+      wget https://s3.amazonaws.com/gedatalab/binaries/zeppelin-0.5.5.tar.gz
+      ;;
+    *)
+      wget https://s3.amazonaws.com/gedatalab/binaries/zeppelin-$ZEPPELIN_VERSION.tar.gz
+      if [ $? != 0 ]; then
+        echo "ERROR: Unknown Zeppelin version"
+        return -1
+      fi
+  esac
+
+  echo "Unpacking Zeppelin"
+  tar xvzf zeppelin-*.tar.gz > /tmp/spark-ec2_zeppelin.log
+  rm zeppelin-*.tar.gz
+  mv `ls -d zeppelin-*` zeppelin
+fi
+
+popd > /dev/null
