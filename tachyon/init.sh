@@ -16,7 +16,7 @@ then
 else
   case "$TACHYON_VERSION" in
     *)
-     wget https://s3.amazonaws.com/gedatalab/tachyon-$TACHYON_VERSION-bin.tar.gz
+     wget https://s3.amazonaws.com/gedatalab/binaries/tachyon-$TACHYON_VERSION-bin.tar.gz
       if [ $? != 0 ]; then
         echo "ERROR: Unknown Tachyon version"
         return -1
