@@ -7,7 +7,7 @@ if [ -d "pipeline" ]; then
   return 0
 fi
 
-aws s3 cp s3://$PIPELINE_BUCKET/binaries/aldatalab-$PIPELINE_VERSION.tgz
+aws s3 cp s3://$PIPELINE_BUCKET/binaries/aldatalab-$PIPELINE_VERSION.tgz .
 if [ $? != 0 ]; then
   echo "ERROR: Unknown Pipeline version"
   return -1
