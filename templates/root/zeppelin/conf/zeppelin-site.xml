@@ -71,7 +71,7 @@
 
 <property>
   <name>zeppelin.notebook.s3.bucket</name>
-  <value>gezeppelin</value>
+  <value>{{ zeppelin_bucket }}</value>
   <description>bucket name for notebook storage</description>
 </property>
 
