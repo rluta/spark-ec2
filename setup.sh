@@ -2,6 +2,7 @@
 
 sudo yum install -y -q pssh
 sudo yum update -y -q aws-cli
+sudo service sshd restart	# make sure modified SSH config is active
 
 # usage: echo_time_diff name start_time end_time
 echo_time_diff () {
