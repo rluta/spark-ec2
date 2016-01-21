@@ -46,6 +46,7 @@ elif slave_ram_mb > 10*1024:
   slave_ram_mb = slave_ram_mb - 2 * 1024 # Leave 2 GB RAM
 else:
   slave_ram_mb = max(512, slave_ram_mb - 1300) # Leave 1.3 GB RAM
+master_ram_mb = master_ram_kb / 1024
 
 # Make tachyon_mb as slave_ram_mb for now.
 tachyon_mb = slave_ram_mb
@@ -66,6 +67,8 @@ template_vars = {
   "hdfs_data_dirs": os.getenv("HDFS_DATA_DIRS"),
   "mapred_local_dirs": os.getenv("MAPRED_LOCAL_DIRS"),
   "spark_local_dirs": os.getenv("SPARK_LOCAL_DIRS"),
+  "spark__mem": "%dm" % slave_ram_mb,
+  "spark_driver_mem": "%dm" % int(0.6*master_ram_mb),
   "spark_worker_mem": "%dm" % slave_ram_mb,
   "spark_worker_instances": worker_instances_str,
   "spark_worker_cores": "%d" %  worker_cores,
