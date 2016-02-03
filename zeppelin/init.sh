@@ -1,6 +1,21 @@
 #!/bin/bash
 
+USER="zeppelin"
+GROUP="hadoop"
 pushd /root > /dev/null
+
+if id $USER >/dev/null 2>&1; then
+  echo "User $USER exists"
+  if id $USER | grep $GROUP >/dev/null; then
+     echo "User $USER belongs to group $GROUP"
+  else
+     echo "Adding $USER to group $GROUP"
+     usermod -a -G $GROUP
+  fi
+else
+  echo "Creating $USER user"
+  useradd -G $GROUP $USER
+fi
 
 if [ -d "zeppelin" ]; then
   echo "Zeppelin seems to be installed. Exiting."
@@ -30,6 +45,10 @@ else
   tar xvzf zeppelin-*.tar.gz > /tmp/spark-ec2_zeppelin.log
   rm zeppelin-*.tar.gz
   mv `ls -d zeppelin-*` zeppelin
+  chown -R $USER zeppelin
+  echo $USER > zeppelin/.user
+  mkdir -p /mnt/ephemeral-hdfs/s3
+  chmod 1777 /mnt/ephemeral-hdfs/s3
 fi
 
 popd > /dev/null
