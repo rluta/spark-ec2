@@ -45,7 +45,7 @@ elif slave_ram_mb > 20*1024:
 elif slave_ram_mb > 10*1024:
   slave_ram_mb = slave_ram_mb - 2 * 1024 # Leave 2 GB RAM
 else:
-  slave_ram_mb = max(512, slave_ram_mb - 1300) # Leave 1.3 GB RAM
+  slave_ram_mb = max(512, slave_ram_mb - 1.5 *1024) # Leave 1.3 GB RAM
 master_ram_mb = master_ram_kb / 1024
 
 # Make tachyon_mb as slave_ram_mb for now.
@@ -64,6 +64,7 @@ template_vars = {
   "master_list": os.getenv("MASTERS"),
   "active_master": os.getenv("MASTERS").split("\n")[0],
   "slave_list": os.getenv("SLAVES"),
+  "num_slaves": len(os.getenv("SLAVES").split("\n")),
   "hdfs_data_dirs": os.getenv("HDFS_DATA_DIRS"),
   "mapred_local_dirs": os.getenv("MAPRED_LOCAL_DIRS"),
   "spark_local_dirs": os.getenv("SPARK_LOCAL_DIRS"),
