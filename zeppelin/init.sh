@@ -48,7 +48,7 @@ else
   chown -R $USER zeppelin
   echo $USER > zeppelin/.user
   mkdir -p /mnt/ephemeral-hdfs/s3
-  chmod 1777 /mnt/ephemeral-hdfs/s3
+  chmod 777 /mnt/ephemeral-hdfs/s3
 fi
 
 popd > /dev/null
