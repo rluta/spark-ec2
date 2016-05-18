@@ -1,0 +1,16 @@
+##################### Elasticsearch Configuration #####################
+
+cluster.name: {{es_clustername}}
+node.master: false
+node.data: false
+network.host: ["_ec2:privateIpv4_","_local_"]
+
+discovery:
+    type: ec2
+    ec2:
+        groups: {{es_discovery}}
+cloud:
+    aws:
+        region: {{region}}
+        access_key: {{aws_access_key_id}}
+        secret_key: {{aws_secret_access_key}}
