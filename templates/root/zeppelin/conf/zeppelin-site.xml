@@ -65,7 +65,7 @@
 <!-- If used S3 to storage the notebooks, it is necessary the following folder structure bucketname/username/notebook/ -->
 <property>
   <name>zeppelin.notebook.s3.user</name>
-  <value>zeppelin</value>
+  <value>{{zeppelin_user}}</value>
   <description>user name for s3 folder structure</description>
 </property>
 

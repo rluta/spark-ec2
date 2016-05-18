@@ -82,6 +82,7 @@ template_vars = {
   "system_ram_mb": "%d" % system_ram_mb,
   "aws_access_key_id": os.getenv("AWS_ACCESS_KEY_ID"),
   "aws_secret_access_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
+  "zeppelin_user": os.getenv("ZEPPELIN_USER"),
   "zeppelin_bucket": os.getenv("ZEPPELIN_BUCKET"),
   "es_clustername": os.getenv("ES_CLUSTERNAME"),
   "es_discovery": os.getenv("ES_DISCOVERY"),
