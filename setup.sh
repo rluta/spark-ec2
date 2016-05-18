@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo yum install -y -q pssh
+sudo yum install -y -q pssh jq
 sudo yum update -y -q aws-cli
 sudo service sshd restart	# make sure modified SSH config is active
 
