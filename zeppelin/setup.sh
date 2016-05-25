@@ -1,6 +1,8 @@
 #!/bin/bash
 
 pushd /root/zeppelin >/dev/null
-USER=$(cat .user)
-su -s /bin/bash $USER -c 'bin/zeppelin-daemon.sh start'
+
+mkdir -p /mnt/ephemeral-hdfs/s3
+chmod 777 /mnt/ephemeral-hdfs/s3
+sudo -u zeppelin bin/zeppelin-daemon.sh start
 popd >/dev/null

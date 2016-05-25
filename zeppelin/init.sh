@@ -14,7 +14,7 @@ if id $USER >/dev/null 2>&1; then
   fi
 else
   echo "Creating $USER user"
-  useradd -G $GROUP $USER
+  useradd -r -G $GROUP $USER
 fi
 
 if [ -d "zeppelin" ]; then
@@ -46,9 +46,6 @@ else
   rm zeppelin-*.tar.gz
   mv `ls -d zeppelin-*` zeppelin
   chown -R $USER zeppelin
-  echo $USER > zeppelin/.user
-  mkdir -p /mnt/ephemeral-hdfs/s3
-  chmod 777 /mnt/ephemeral-hdfs/s3
 fi
 
 popd > /dev/null
