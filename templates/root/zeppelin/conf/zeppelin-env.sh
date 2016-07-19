@@ -41,7 +41,7 @@ export MASTER=`cat /root/spark-ec2/cluster-url`
 ## defining SPARK_HOME makes Zeppelin run spark interpreter process using spark-submit
 ##
 export SPARK_HOME=/root/spark                             # (required) When it is defined, load it instead of Zeppelin embedded Spark libraries
-export SPARK_SUBMIT_OPTIONS="--jars /root/pipeline/lib/ALDataLab-assembly-1.3.1.jar --packages org.elasticsearch:elasticsearch-hadoop:2.3.2,info.debatty:java-string-similarity:0.13"
+#export SPARK_SUBMIT_OPTIONS="--jars /root/pipeline/lib/ALDataLab-assembly-1.3.1.jar --packages org.elasticsearch:elasticsearch-hadoop:2.3.2,info.debatty:java-string-similarity:0.13"
 
 ## Use embedded spark binaries ##
 ## without SPARK_HOME defined, Zeppelin still able to run spark interpreter process using embedded spark binaries.
