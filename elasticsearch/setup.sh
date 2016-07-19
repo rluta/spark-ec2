@@ -13,4 +13,6 @@ for slave in $SLAVES; do
     ../spark-ec2/ssh-no-keychecking.sh -tt $slave "sudo -u elasticsearch -b /root/elasticsearch/bin/elasticsearch -d"
 done
 
+sudo -u elasticsearch -b /root/elasticsearch/bin/elasticsearch -d
+
 popd >/dev/null
