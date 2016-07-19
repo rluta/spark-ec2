@@ -84,6 +84,9 @@ template_vars = {
   "aws_secret_access_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
   "zeppelin_user": os.getenv("ZEPPELIN_USER"),
   "zeppelin_bucket": os.getenv("ZEPPELIN_BUCKET"),
+  "hive_db": os.getenv("HIVE_DB"),
+  "hive_user": os.getenv("HIVE_USER"),
+  "hive_password": os.getenv("HIVE_PASSWORD"),
   "es_clustername": os.getenv("ES_CLUSTERNAME"),
   "es_discovery": os.getenv("ES_DISCOVERY"),
   "region": os.getenv("REGION")
