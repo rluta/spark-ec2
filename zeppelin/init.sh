@@ -46,6 +46,10 @@ else
   rm zeppelin-*.tar.gz
   mv `ls -d zeppelin-*` zeppelin
   chown -R $USER zeppelin
+  if [ -r zeppelin/conf/interpreter.json.template ]
+  then
+     mv zeppelin/conf/interpreter.json.template zeppelin/conf/interpreter.json
+  fi
 fi
 
 popd > /dev/null
