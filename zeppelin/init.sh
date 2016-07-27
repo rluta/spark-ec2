@@ -14,7 +14,7 @@ if id $USER >/dev/null 2>&1; then
   fi
 else
   echo "Creating $USER user"
-  useradd -r -G $GROUP $USER
+  useradd -r -G $GROUP -d /root/$USER -m $USER
 fi
 
 if [ -d "zeppelin" ]; then
