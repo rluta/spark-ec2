@@ -1,5 +1,15 @@
 #!/bin/bash
 
+if [[ -e /usr/bin/realpath ]]; then
+  echo "Slave `hostname` seems to already be set up, exiting"
+  exit 0
+fi
+
+if [[ -e /root/.INSTALLED ]]; then
+  echo "Slave `hostname` has already been set up on `cat /root/.INSTALLED`, exiting"
+  exit 0
+fi
+
 # Disable Transparent Huge Pages (THP)
 # THP can result in system thrashing (high sys usage) due to frequent defrags of memory.
 # Most systems recommends turning THP off.
@@ -132,3 +142,5 @@ popd > /dev/null
 # this is to set the ulimit for root and other users
 echo '* soft nofile 1000000' >> /etc/security/limits.conf
 echo '* hard nofile 1000000' >> /etc/security/limits.conf
+
+date > /root/.INSTALLED
