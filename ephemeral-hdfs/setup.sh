@@ -19,7 +19,7 @@ wait
 
 NAMENODE_DIR=/mnt/ephemeral-hdfs/dfs/name
 
-if [ -f "$NAMENODE_DIR/current/VERSION" ] && [ -f "$NAMENODE_DIR/current/fsimage" ]; then
+if [ -f "$NAMENODE_DIR/current/VERSION" ]; then
   echo "Hadoop namenode appears to be formatted: skipping"
 else
   echo "Formatting ephemeral HDFS namenode..."
