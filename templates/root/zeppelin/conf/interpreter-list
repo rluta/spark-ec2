@@ -1,0 +1,8 @@
+# [name]  [maven artifact]  [description]
+
+angular         org.apache.zeppelin:zeppelin-angular:0.6.0              HTML and AngularJS view rendering
+elasticsearch   org.apache.zeppelin:zeppelin-elasticsearch:0.6.0        Elasticsearch interpreter
+file            org.apache.zeppelin:zeppelin-file:0.6.0                 HDFS file interpreter
+jdbc            org.apache.zeppelin:zeppelin-jdbc:0.6.0                 Jdbc interpreter
+md              org.apache.zeppelin:zeppelin-markdown:0.6.0             Markdown support
+shell           org.apache.zeppelin:zeppelin-shell:0.6.0                Shell command

@@ -4,6 +4,11 @@ USER="zeppelin"
 GROUP="hadoop"
 pushd /root > /dev/null
 
+if [ -d "zeppelin" ]; then
+  echo "Zeppelin seems to be installed. Exiting."
+  return 0
+fi
+
 if id $USER >/dev/null 2>&1; then
   echo "User $USER exists"
   if id $USER | grep $GROUP >/dev/null; then
@@ -15,11 +20,6 @@ if id $USER >/dev/null 2>&1; then
 else
   echo "Creating $USER user"
   useradd -r -G $GROUP -d /root/$USER -m $USER
-fi
-
-if [ -d "zeppelin" ]; then
-  echo "Zeppelin seems to be installed. Exiting."
-  return 0
 fi
 
 # Github tag:
@@ -45,11 +45,10 @@ else
   tar xvzf zeppelin-*.tar.gz > /tmp/spark-ec2_zeppelin.log
   rm zeppelin-*.tar.gz
   mv `ls -d zeppelin-*` zeppelin
+
   chown -R $USER zeppelin
-  if [ -r zeppelin/conf/interpreter.json.template ]
-  then
-     mv zeppelin/conf/interpreter.json.template zeppelin/conf/interpreter.json
-  fi
+
+
 fi
 
 popd > /dev/null

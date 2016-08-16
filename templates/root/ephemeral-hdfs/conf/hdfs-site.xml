@@ -57,21 +57,36 @@
     <name>dfs.client.file-block-storage-locations.timeout</name>
     <value>3000</value>
   </property>
-    <property>
-        <name>fs.s3.awsAccessKeyId</name>
-        <value>{{aws_access_key_id}}</value>
-    </property>
-    <property>
-        <name>fs.s3.awsSecretAccessKey</name>
-        <value>{{aws_secret_access_key}}</value>
-    </property>
-    <property>
-        <name>fs.s3n.awsAccessKeyId</name>
-        <value>{{aws_access_key_id}}</value>
-    </property>
-    <property>
-        <name>fs.s3n.awsSecretAccessKey</name>
-        <value>{{aws_secret_access_key}}</value>
-    </property>
+
+  <property>
+    <name>dfs.hosts.exclude</name>
+    <value>/root/ephemeral-hdfs/conf/dfs.exclude</value>
+    <final>true</final>
+  </property>
+
+  <property>
+    <name>dfs.namenode.check.stale.datanode</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>fs.s3.awsAccessKeyId</name>
+    <value>{{aws_access_key_id}}</value>
+  </property>
+
+  <property>
+    <name>fs.s3.awsSecretAccessKey</name>
+    <value>{{aws_secret_access_key}}</value>
+  </property>
+
+  <property>
+    <name>fs.s3n.awsAccessKeyId</name>
+    <value>{{aws_access_key_id}}</value>
+  </property>
+
+  <property>
+    <name>fs.s3n.awsSecretAccessKey</name>
+    <value>{{aws_secret_access_key}}</value>
+  </property>
 
 </configuration>
