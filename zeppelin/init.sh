@@ -37,7 +37,14 @@ else
   echo "Unpacking Zeppelin"
   tar xvzf zeppelin-*.tar.gz > /tmp/spark-ec2_zeppelin.log
   rm zeppelin-*.tar.gz
-  mv `ls -d zeppelin-*` zeppelin
+  if [ -d zeppelin ]
+  then
+    mv zeppelin zeppelin.base
+    mv `ls -d zeppelin-*` zeppelin
+    mv zeppelin.base/conf/* zeppelin/conf
+    mv zeppelin.base/.??* zeppelin/
+    rmdir zeppelin.base
+  fi
 
   chown -R $USER zeppelin
 fi
