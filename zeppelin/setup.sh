@@ -6,16 +6,24 @@ mkdir -p /mnt/ephemeral-hdfs/s3
 chmod 777 /mnt/ephemeral-hdfs/s3
 sudo -u zeppelin bin/zeppelin-daemon.sh restart
 
-if [ -d spark-ec2/zeppelin/conf ]
+if [ -d /root/spark-ec2/zeppelin/conf ]
 then
-    mv spark-ec2/zeppelin/conf/* zeppelin/conf/
+    cp spark-ec2/zeppelin/conf/* zeppelin/conf/
 fi
 
-if [ -d zeppelin/interpreters ]
+if [ -d /root/spark-ec2/zeppelin/skel ]
 then
+    cp -f spark-ec2/zeppelin/skel/.??* zeppelin/
+    cp -f spark-ec2/zeppelin/skel/.??* /root/
+fi
+
+if [ -d /root/zeppelin/conf/interpreters ]
+then
+    echo "Waiting for zeppelin to start..."
     for interpreter in zeppelin/interpreters
     do
-        curl -s -XPOST --data-binary @$interpreter http://localhost:8080/api/interpreter/setting
+        echo curl -s -XPOST --data-binary @${interpreter} http://localhost:8080/api/interpreter/setting
+        curl -s -XPOST --data-binary @${interpreter} http://localhost:8080/api/interpreter/setting
     done
 fi
 

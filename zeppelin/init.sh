@@ -1,7 +1,6 @@
 #!/bin/bash
 
 USER="zeppelin"
-GROUP="hadoop"
 pushd /root > /dev/null
 
 if [ -d "zeppelin" ]; then
@@ -11,15 +10,9 @@ fi
 
 if id $USER >/dev/null 2>&1; then
   echo "User $USER exists"
-  if id $USER | grep $GROUP >/dev/null; then
-     echo "User $USER belongs to group $GROUP"
-  else
-     echo "Adding $USER to group $GROUP"
-     usermod -a -G $GROUP
-  fi
 else
   echo "Creating $USER user"
-  useradd -r -G $GROUP -d /root/$USER -m $USER
+  useradd -r -d /root/$USER -m $USER
 fi
 
 # Github tag:
@@ -47,8 +40,6 @@ else
   mv `ls -d zeppelin-*` zeppelin
 
   chown -R $USER zeppelin
-
-
 fi
 
 popd > /dev/null
