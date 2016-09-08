@@ -9,7 +9,7 @@ fi
 
 if [ -d /root/spark-ec2/zeppelin/skel ]
 then
-    cp -f /root/spark-ec2/zeppelin/skel/.??* zeppelin/
+    cp -f /root/spark-ec2/zeppelin/skel/.??* /root/zeppelin/
     cp -f /root/spark-ec2/zeppelin/skel/.??* /root/
 fi
 
