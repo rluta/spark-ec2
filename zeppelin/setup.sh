@@ -4,13 +4,17 @@ pushd /root/zeppelin >/dev/null
 
 if [ -d /root/spark-ec2/zeppelin/conf ]
 then
-    cp /root/spark-ec2/zeppelin/conf/* zeppelin/conf/
+    cp /root/spark-ec2/zeppelin/conf/* /root/zeppelin/conf/
 fi
 
 if [ -d /root/spark-ec2/zeppelin/skel ]
 then
-    cp -f /root/spark-ec2/zeppelin/skel/.??* /root/zeppelin/
-    cp -f /root/spark-ec2/zeppelin/skel/.??* /root/
+    for file in  /root/spark-ec2/zeppelin/skel
+    do
+        name=$(basename ${file})
+        cp -f ${file} /root/zeppelin/.${name}
+        cp -f ${file} /root/.${name}
+    done
 fi
 
 
