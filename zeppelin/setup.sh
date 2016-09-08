@@ -2,25 +2,27 @@
 
 pushd /root/zeppelin >/dev/null
 
-mkdir -p /mnt/ephemeral-hdfs/s3
-chmod 777 /mnt/ephemeral-hdfs/s3
-sudo -u zeppelin bin/zeppelin-daemon.sh restart
-
 if [ -d /root/spark-ec2/zeppelin/conf ]
 then
-    cp spark-ec2/zeppelin/conf/* zeppelin/conf/
+    cp /root/spark-ec2/zeppelin/conf/* zeppelin/conf/
 fi
 
 if [ -d /root/spark-ec2/zeppelin/skel ]
 then
-    cp -f spark-ec2/zeppelin/skel/.??* zeppelin/
-    cp -f spark-ec2/zeppelin/skel/.??* /root/
+    cp -f /root/spark-ec2/zeppelin/skel/.??* zeppelin/
+    cp -f /root/spark-ec2/zeppelin/skel/.??* /root/
 fi
+
+
+mkdir -p /mnt/ephemeral-hdfs/s3
+chmod 777 /mnt/ephemeral-hdfs/s3
+sudo -u zeppelin bin/zeppelin-daemon.sh restart
 
 if [ -d /root/zeppelin/conf/interpreters ]
 then
     echo "Waiting for zeppelin to start..."
-    for interpreter in zeppelin/interpreters
+    sleep 10
+    for interpreter in /root/zeppelin/conf/interpreters
     do
         echo curl -s -XPOST --data-binary @${interpreter} http://localhost:8080/api/interpreter/setting
         curl -s -XPOST --data-binary @${interpreter} http://localhost:8080/api/interpreter/setting
