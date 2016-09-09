@@ -1,7 +1,15 @@
 #!/bin/bash
 
 USER="zeppelin"
+
 pushd /root > /dev/null
+
+if [ ! -z "$(getent group hadoop)" ]
+then
+    GROUP_ADD="-G hadoop"
+else
+    GROUP_ADD=""
+fi
 
 if [ -d "zeppelin" ]; then
   echo "Zeppelin seems to be installed. Exiting."
@@ -12,7 +20,7 @@ if id $USER >/dev/null 2>&1; then
   echo "User $USER exists"
 else
   echo "Creating $USER user"
-  useradd -r -d /root/$USER -m $USER
+  useradd -r ${GROUP_ADD} -m $USER
 fi
 
 # Github tag:
@@ -22,17 +30,11 @@ then
   echo "Zeppelin git hashes are not yet supported. Please specify a Zeppelin release version."
 # Pre-package zeppelin version
 else
-  case "$ZEPPELIN_VERSION" in
-    0.5.5)
-      wget https://s3.amazonaws.com/gedatalab/binaries/zeppelin-0.5.5.tar.gz
-      ;;
-    *)
-      wget https://s3.amazonaws.com/gedatalab/binaries/zeppelin-$ZEPPELIN_VERSION.tar.gz
-      if [ $? != 0 ]; then
-        echo "ERROR: Unknown Zeppelin version"
-        return -1
-      fi
-  esac
+  wget https://s3.amazonaws.com/gedatalab/binaries/zeppelin-$ZEPPELIN_VERSION.tar.gz
+  if [ $? != 0 ]; then
+    echo "ERROR: Unknown Zeppelin version"
+    return -1
+  fi
 
   echo "Unpacking Zeppelin"
   tar xvzf zeppelin-*.tar.gz > /tmp/spark-ec2_zeppelin.log
@@ -40,12 +42,13 @@ else
   if [ -d zeppelin ]
   then
     mv zeppelin zeppelin.base
-    mv `ls -d zeppelin-*` zeppelin
+    mv $(ls -d zeppelin-*) zeppelin
     mv zeppelin.base/conf/* zeppelin/conf
     mv zeppelin.base/.??* zeppelin/
     rmdir zeppelin.base
   fi
 
+  chmod 751 /root
   chown -R $USER zeppelin
 fi
 

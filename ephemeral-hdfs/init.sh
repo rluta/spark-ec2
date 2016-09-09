@@ -1,6 +1,14 @@
 #!/bin/bash
 
 pushd /root > /dev/null
+USER=hadoop
+
+if id $USER >/dev/null 2>&1; then
+  echo "User $USER exists"
+else
+  echo "Creating $USER user"
+  useradd -r -m $USER
+fi
 
 if [ -d "ephemeral-hdfs" ]; then
   echo "Ephemeral HDFS seems to be installed. Exiting."
