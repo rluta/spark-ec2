@@ -1,6 +1,23 @@
 #!/bin/bash
 
+if [ -z "$HIVE_DB" ]; then
+  echo "HIVE_DB not defined, skipping setup"
+  exit 1
+fi
+
+if [ -z "$HIVE_USER" ]; then
+  echo "HIVE_USER not defined, skipping setup"
+  exit 1
+fi
+
+if [ -z "$HIVE_PASSWORD" ]; then
+  echo "HIVE_PASSWORD not defined, skipping setup"
+  exit 1
+fi
+
 service mysqld start
+sleep 1
+
 if mysqladmin create $HIVE_DB 2>/dev/null
 then
     mysql $HIVE_DB <<EOF

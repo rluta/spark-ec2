@@ -9,6 +9,18 @@ import sys
 # Deploy the configuration file templates in the spark-ec2/templates directory
 # to the root filesystem, substituting variables such as the master hostname,
 # ZooKeeper URL, etc as read from the environment.
+basedir = os.getenv("INSTALL_DIR")
+if basedir is None:
+  basedir = "/root/spark-ec2"
+
+rootdir = os.getenv("ROOT_DIR")
+if rootdir is None:
+  rootdir = "/root"
+
+if len(sys.argv) > 1:
+  template_dir = sys.argv[1]
+else:
+  template_dir = "/root/spark-ec2/templates"
 
 # Find system memory in KB and compute Spark's default limit from that
 mem_command = "cat /proc/meminfo | grep MemTotal | awk '{print $2}'"
@@ -17,18 +29,12 @@ cpu_command = "nproc"
 master_ram_kb = int(
   os.popen(mem_command).read().strip())
 # This is the master's memory. Try to find slave's memory as well
-first_slave = os.popen("cat /root/spark-ec2/slaves | head -1").read().strip()
+first_slave = os.popen("cat %s/slaves | head -1" % basedir).read().strip()
 
-slave_mem_command = "ssh -t -o StrictHostKeyChecking=no %s %s" %\
-        (first_slave, mem_command)
-
-slave_cpu_command = "ssh -t -o StrictHostKeyChecking=no %s %s" %\
-        (first_slave, cpu_command)
-
+slave_mem_command = "ssh -t -o StrictHostKeyChecking=no %s %s" % (first_slave, mem_command)
+slave_cpu_command = "ssh -t -o StrictHostKeyChecking=no %s %s" % (first_slave, cpu_command)
 slave_ram_kb = int(os.popen(slave_mem_command).read().strip())
-
 slave_cpus = int(os.popen(slave_cpu_command).read().strip())
-
 system_ram_kb = min(slave_ram_kb, master_ram_kb)
 
 system_ram_mb = system_ram_kb / 1024
@@ -61,6 +67,8 @@ if os.getenv("SPARK_WORKER_INSTANCES") != "":
   worker_cores = max(slave_cpus / worker_instances, 1)
 
 template_vars = {
+  "install_dir": basedir,
+  "rootdir": rootdir,
   "master_list": os.getenv("MASTERS"),
   "active_master": os.getenv("MASTERS").split("\n")[0],
   "slave_list": os.getenv("SLAVES"),
@@ -91,8 +99,6 @@ template_vars = {
   "es_discovery": os.getenv("ES_DISCOVERY"),
   "region": os.getenv("REGION")
 }
-
-template_dir="/root/spark-ec2/templates"
 
 for path, dirs, files in os.walk(template_dir):
   if path.find(".svn") == -1:

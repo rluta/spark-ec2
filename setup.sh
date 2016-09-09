@@ -1,9 +1,5 @@
 #!/bin/bash
 
-sudo yum install -y -q pssh jq
-sudo yum update -y -q aws-cli
-sudo service sshd restart	# make sure modified SSH config is active
-
 # usage: echo_time_diff name start_time end_time
 echo_time_diff () {
   local format='%Hh %Mm %Ss'
@@ -12,11 +8,13 @@ echo_time_diff () {
   echo "[timing] $1: " "$(date -u -d@"$diff_secs" +"$format")"
 }
 
+export INSTALL_DIR=$(dirname $(readlink -f $0))
+
 # Make sure we are in the spark-ec2 directory
-pushd /root/spark-ec2 > /dev/null
+pushd $INSTALL_DIR > /dev/null
 
 # Load the environment variables specific to this AMI
-source /root/.bash_profile
+source ~/.bash_profile
 
 # Load the cluster variables set by the deploy script
 source ec2-variables.sh
@@ -58,7 +56,7 @@ echo "RSYNC'ing /root/spark-ec2 to other cluster nodes..."
 rsync_start_time="$(date +'%s')"
 for node in $SLAVES $OTHER_MASTERS; do
   echo $node
-  rsync -e "ssh $SSH_OPTS" -az /root/spark-ec2 $node:/root &
+  rsync -e "ssh $SSH_OPTS" -az $INSTALL_DIR $node:/root &
   scp $SSH_OPTS ~/.ssh/id_rsa $node:.ssh &
   sleep 0.1
 done
@@ -73,15 +71,15 @@ pssh --inline \
     --user root \
     --extra-args "-t -t $SSH_OPTS" \
     --timeout 0 \
-    "spark-ec2/setup-slave.sh"
+    "%s/setup-slave.sh" % basedir
 setup_slave_end_time="$(date +'%s')"
 echo_time_diff "setup-slave" "$setup_slave_start_time" "$setup_slave_end_time"
 
 # Always include 'scala' module if it's not defined as a work around
 # for older versions of the scripts.
-if [[ ! $MODULES =~ *scala* ]]; then
-  MODULES=$(printf "%s\n%s\n" "scala" $MODULES)
-fi
+#if [[ ! $MODULES =~ *scala* ]]; then
+#  MODULES=$(printf "%s\n%s\n" "scala" $MODULES)
+#fi
 
 # Install / Init module
 for module in $MODULES; do
@@ -92,7 +90,7 @@ for module in $MODULES; do
   fi
   module_init_end_time="$(date +'%s')"
   echo_time_diff "$module init" "$module_init_start_time" "$module_init_end_time"
-  cd /root/spark-ec2  # guard against init.sh changing the cwd
+  cd $INSTALL_DIR  # guard against init.sh changing the cwd
 done
 
 # Deploy templates
@@ -113,7 +111,7 @@ for module in $MODULES; do
   sleep 0.1
   module_setup_end_time="$(date +'%s')"
   echo_time_diff "$module setup" "$module_setup_start_time" "$module_setup_end_time"
-  cd /root/spark-ec2  # guard against setup.sh changing the cwd
+  cd $INSTALL_DIR  # guard against setup.sh changing the cwd
 done
 
 popd > /dev/null
