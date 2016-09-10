@@ -11,7 +11,7 @@ else
     GROUP_ADD=""
 fi
 
-if [ -d "zeppelin" ]; then
+if [ -d "zeppelin/bin" ]; then
   echo "Zeppelin seems to be installed. Exiting."
   return 0
 fi
@@ -42,9 +42,8 @@ else
   if [ -d zeppelin ]
   then
     mv zeppelin zeppelin.base
-    mv $(ls -d zeppelin-*) zeppelin
-    mv zeppelin.base/conf/* zeppelin/conf
-    mv zeppelin.base/.??* zeppelin/
+    ln -sf $(ls -d zeppelin-*) zeppelin
+    cp -f zeppelin.base/conf/* zeppelin/conf
     rmdir zeppelin.base
   fi
 
