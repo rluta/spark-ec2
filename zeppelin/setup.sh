@@ -4,33 +4,25 @@ pushd /root/zeppelin >/dev/null
 
 if [ -d /root/spark-ec2/zeppelin/conf ]
 then
-    cp /root/spark-ec2/zeppelin/conf/* /root/zeppelin/conf/
+    cp -f /root/spark-ec2/zeppelin/conf/* /root/zeppelin/conf/
 fi
-
-if [ -d /root/spark-ec2/zeppelin/skel ]
-then
-    for file in  /root/spark-ec2/zeppelin/skel
-    do
-        name=$(basename ${file})
-        cp -f ${file} /root/zeppelin/.${name}
-        cp -f ${file} /root/.${name}
-    done
-fi
-
 
 mkdir -p /mnt/hdfs/s3
 chmod 777 /mnt/hdfs/s3
+chown -R zeppelin /root/zeppelin*
+
 sudo -u zeppelin bin/zeppelin-daemon.sh restart
 
-if [ -d /root/zeppelin/conf/interpreters ]
+if [ -d conf/interpreters ]
 then
     echo "Waiting for zeppelin to start..."
     sleep 10
-    for interpreter in /root/zeppelin/conf/interpreters
+    for interpreter in conf/interpreters
     do
         echo curl -s -XPOST --data-binary @${interpreter} http://localhost:8080/api/interpreter/setting
         curl -s -XPOST --data-binary @${interpreter} http://localhost:8080/api/interpreter/setting
     done
 fi
+
 
 popd >/dev/null

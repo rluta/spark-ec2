@@ -20,7 +20,7 @@ if id $USER >/dev/null 2>&1; then
   echo "User $USER exists"
 else
   echo "Creating $USER user"
-  useradd -r ${GROUP_ADD} -m $USER
+  useradd -r ${GROUP_ADD} -d /root/zeppelin -m $USER
 fi
 
 # Github tag:
@@ -39,16 +39,15 @@ else
   echo "Unpacking Zeppelin"
   tar xvzf zeppelin-*.tar.gz > /tmp/spark-ec2_zeppelin.log
   rm zeppelin-*.tar.gz
-  if [ -d zeppelin ]
-  then
+  if [ -d zeppelin ]; then
     mv zeppelin zeppelin.base
     ln -sf $(ls -d zeppelin-*) zeppelin
-    cp -f zeppelin.base/conf/* zeppelin/conf
+    cp -rf zeppelin.base/conf/* zeppelin/conf
     rmdir zeppelin.base
   fi
 
   chmod 751 /root
-  chown -R $USER zeppelin
+  chown -R $USER zeppelin*
 fi
 
 popd > /dev/null
