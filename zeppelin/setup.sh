@@ -18,8 +18,8 @@ then
 fi
 
 
-mkdir -p /mnt/ephemeral-hdfs/s3
-chmod 777 /mnt/ephemeral-hdfs/s3
+mkdir -p /mnt/hdfs/s3
+chmod 777 /mnt/hdfs/s3
 sudo -u zeppelin bin/zeppelin-daemon.sh restart
 
 if [ -d /root/zeppelin/conf/interpreters ]
