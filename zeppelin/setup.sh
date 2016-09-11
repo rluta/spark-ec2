@@ -4,12 +4,12 @@ pushd /root/zeppelin >/dev/null
 
 if [ -d /root/spark-ec2/zeppelin/conf ]
 then
-    cp -f /root/spark-ec2/zeppelin/conf/* /root/zeppelin/conf/
+    cp -f /root/spark-ec2/zeppelin/conf/* conf/
 fi
 
 mkdir -p /mnt/hdfs/s3
 chmod 777 /mnt/hdfs/s3
-chown -R zeppelin /root/zeppelin*
+chown -R zeppelin .
 
 sudo -u zeppelin bin/zeppelin-daemon.sh restart
 

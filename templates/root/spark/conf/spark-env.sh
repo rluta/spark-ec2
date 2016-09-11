@@ -11,7 +11,7 @@ export SPARK_WORKER_CORES={{spark_worker_cores}}
 
 export HADOOP_HOME="/root/hdfs"
 export SPARK_MASTER_IP={{active_master}}
-export MASTER=`cat /root/spark-ec2/cluster-url`
+export MASTER=$(cat /root/spark-ec2/cluster-url)
 export SPARK_MASTER_WEBUI_PORT=4040
 export SPARK_PID_DIR=/var/run/spark
 

@@ -26,8 +26,7 @@ else:
 mem_command = "cat /proc/meminfo | grep MemTotal | awk '{print $2}'"
 cpu_command = "nproc"
 
-master_ram_kb = int(
-  os.popen(mem_command).read().strip())
+master_ram_kb = int(os.popen(mem_command).read().strip())
 # This is the master's memory. Try to find slave's memory as well
 first_slave = os.popen("cat %s/slaves | head -1" % basedir).read().strip()
 
