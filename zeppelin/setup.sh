@@ -17,7 +17,7 @@ if [ -d conf/interpreters ]
 then
     echo "Waiting for zeppelin to start..."
     sleep 10
-    for interpreter in conf/interpreters
+    for interpreter in conf/interpreters/*
     do
         echo curl -s -XPOST --data-binary @${interpreter} http://localhost:8080/api/interpreter/setting
         curl -s -XPOST --data-binary @${interpreter} http://localhost:8080/api/interpreter/setting

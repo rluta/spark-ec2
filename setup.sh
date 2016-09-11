@@ -71,7 +71,7 @@ pssh --inline \
     --user root \
     --extra-args "-t -t $SSH_OPTS" \
     --timeout 0 \
-    "%s/setup-slave.sh" % basedir
+    "${INSTALL_DIR}/setup-slave.sh"
 setup_slave_end_time="$(date +'%s')"
 echo_time_diff "setup-slave" "$setup_slave_start_time" "$setup_slave_end_time"
 
