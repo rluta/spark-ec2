@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if [[ -e /usr/bin/realpath ]]; then
-  echo "Slave `hostname` seems to already be set up, exiting"
-  exit 0
-fi
-
 if [[ -e /root/.INSTALLED ]]; then
   echo "Slave `hostname` has already been set up on `cat /root/.INSTALLED`, exiting"
   exit 0
@@ -130,17 +125,10 @@ echo 1 > /proc/sys/vm/overcommit_memory
 # TODO(shivaram): Avoid duplicate entries ?
 cat /root/spark-ec2/github.hostkey >> /root/.ssh/known_hosts
 
-# Create /usr/bin/realpath which is used by R to find Java installations
-# NOTE: /usr/bin/realpath is missing in CentOS AMIs. See
-# http://superuser.com/questions/771104/usr-bin-realpath-not-found-in-centos-6-5
-echo '#!/bin/bash' > /usr/bin/realpath
-echo 'readlink -e "$@"' >> /usr/bin/realpath
-chmod a+x /usr/bin/realpath
-
-popd > /dev/null
-
 # this is to set the ulimit for root and other users
 echo '* soft nofile 1000000' >> /etc/security/limits.conf
 echo '* hard nofile 1000000' >> /etc/security/limits.conf
 
 date > /root/.INSTALLED
+
+popd > /dev/null
