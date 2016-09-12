@@ -59,6 +59,10 @@ tachyon_mb = slave_ram_mb
 worker_instances_str = ""
 worker_cores = slave_cpus
 
+cluster_url = ""
+with open("/root/spark-ec2/cluster-url", "r") as url_file:
+    cluster_url = url_file.readline().rstrip()
+
 if os.getenv("SPARK_WORKER_INSTANCES") != "":
   worker_instances = int(os.getenv("SPARK_WORKER_INSTANCES", 1))
   worker_instances_str = "%d" % worker_instances
@@ -68,6 +72,7 @@ if os.getenv("SPARK_WORKER_INSTANCES") != "":
 template_vars = {
   "install_dir": basedir,
   "rootdir": rootdir,
+  "spark_cluster_url": cluster_url,
   "master_list": os.getenv("MASTERS"),
   "active_master": os.getenv("MASTERS").split("\n")[0],
   "slave_list": os.getenv("SLAVES"),

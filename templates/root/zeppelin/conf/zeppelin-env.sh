@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-export MASTER=`cat /root/spark-ec2/cluster-url`
+export MASTER=$(cat /root/spark-ec2/cluster-url)
 # export ZEPPELIN_JAVA_OPTS      		# Additional jvm options. for example, export ZEPPELIN_JAVA_OPTS="-Dspark.executor.memory=8g -Dspark.cores.max=16"
 # export ZEPPELIN_MEM            		# Zeppelin jvm mem options Default -Xmx1024m -XX:MaxPermSize=512m
 # export ZEPPELIN_INTP_MEM       		# zeppelin interpreter process jvm mem options. Default = ZEPPELIN_MEM

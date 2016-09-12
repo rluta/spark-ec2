@@ -6,6 +6,15 @@
     "spark.executor.memory": "10G",
     "spark.cores.max": "56",
     "spark.app.name": "Zeppelin"
+    "zeppelin.spark.printREPLOutput": "true",
+    "zeppelin.dep.additionalRemoteRepository": "spark-packages,http://dl.bintray.com/spark-packages/maven,false;",
+    "zeppelin.spark.importImplicit": "true",
+    "zeppelin.spark.sql.stacktrace": "false",
+    "zeppelin.spark.concurrentSQL": "false",
+    "zeppelin.spark.useHiveContext": "true",
+    "zeppelin.dep.localrepo": "local-repo",
+    "zeppelin.spark.maxResult": "1000",
+    "master": "{{spark_cluster_url}}"
   },
   "interpreterGroup": [
     {

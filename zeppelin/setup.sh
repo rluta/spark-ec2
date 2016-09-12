@@ -13,18 +13,27 @@ chown -R zeppelin .
 
 sudo -u zeppelin bin/zeppelin-daemon.sh restart
 
-if [ -d conf/interpreters ]
+if [ ! -z "${ZEPPELIN_INTERPRETERS}" ]
 then
     echo "Waiting for zeppelin to start..."
     sleep 10
+
     # Delete default spark interpreter settings
+    echo "Removing default spark interpreter"
     sparkid=$(curl -s http://localhost:8080/api/interpreter/setting | jq -r '.body[]| select(.name == "spark") |.id')
     curl -s -XDELETE http://localhost:8080/api/interpreter/setting/$sparkid
 
     # Update based on provided configs
-    for interpreter in conf/interpreters/*
+    for interpreter in ${ZEPPELIN_INTERPRETERS}
     do
-        curl -s -XPOST --data-binary @${interpreter} http://localhost:8080/api/interpreter/setting
+        echo "Creating $interpreter"
+        int_file="conf/interpreters/${interpreter}.json"
+        if [ -f "$int_file" ]
+        then
+            curl -s -XPOST --data-binary @${int_file} http://localhost:8080/api/interpreter/setting
+        else
+           echo "Warning: ${int_file} does not exist, ignoring $interpreter"
+        fi
     done
 fi
 
