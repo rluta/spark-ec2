@@ -16,7 +16,6 @@
 # limitations under the License.
 #
 
-# export JAVA_HOME=
 export MASTER=`cat /root/spark-ec2/cluster-url`
 # export ZEPPELIN_JAVA_OPTS      		# Additional jvm options. for example, export ZEPPELIN_JAVA_OPTS="-Dspark.executor.memory=8g -Dspark.cores.max=16"
 # export ZEPPELIN_MEM            		# Zeppelin jvm mem options Default -Xmx1024m -XX:MaxPermSize=512m
@@ -34,29 +33,9 @@ export MASTER=`cat /root/spark-ec2/cluster-url`
 # export ZEPPELIN_IDENT_STRING   		# A string representing this instance of zeppelin. $USER by default.
 # export ZEPPELIN_NICENESS       		# The scheduling priority for daemons. Defaults to 0.
 
-
 #### Spark interpreter configuration ####
 
 ## Use provided spark installation ##
 ## defining SPARK_HOME makes Zeppelin run spark interpreter process using spark-submit
 ##
-export SPARK_HOME=/root/spark                             # (required) When it is defined, load it instead of Zeppelin embedded Spark libraries
-#export SPARK_SUBMIT_OPTIONS="--jars /root/pipeline/lib/ALDataLab-assembly-1.3.1.jar --packages org.elasticsearch:elasticsearch-hadoop:2.3.2,info.debatty:java-string-similarity:0.13"
-
-## Use embedded spark binaries ##
-## without SPARK_HOME defined, Zeppelin still able to run spark interpreter process using embedded spark binaries.
-## however, it is not encouraged when you can define SPARK_HOME
-##
-# Options read in YARN client mode
-# export HADOOP_CONF_DIR         		# yarn-site.xml is located in configuration directory in HADOOP_CONF_DIR.
-# Pyspark (supported with Spark 1.2.1 and above)
-# To configure pyspark, you need to set spark distribution's path to 'spark.home' property in Interpreter setting screen in Zeppelin GUI
-# export PYSPARK_PYTHON          		# path to the python command. must be the same path on the driver(Zeppelin) and all workers.
-# export PYTHONPATH  
-
-## Spark interpreter options ##
-##
-# export ZEPPELIN_SPARK_USEHIVECONTEXT  # Use HiveContext instead of SQLContext if set true. true by default.
-# export ZEPPELIN_SPARK_CONCURRENTSQL   # Execute multiple SQL concurrently if set true. false by default.
-# export ZEPPELIN_SPARK_MAXRESULT       # Max number of SparkSQL result to display. 1000 by default.
-
+export SPARK_HOME=/root/spark

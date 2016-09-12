@@ -19,11 +19,21 @@ if [ -d "hdfs" ]; then
   return 0
 fi
 
-wget http://s3.amazonaws.com/spark-related-packages/hadoop-2.4.0.tar.gz
+case ${HADOOP_MAJOR_VERSION} in
+  2.7)
+    version="2.7.3"
+  ;;
+  *)
+    version="2.4.1"
+  ;;
+esac
+
+wget https://s3.amazonaws.com/gedatalab/binaries/hadoop-${version}.tar.gz
 echo "Unpacking Hadoop"
 tar xvzf hadoop-*.tar.gz > /tmp/spark-ec2_hadoop.log
 rm hadoop-*.tar.gz
-mv hadoop-2.4.0/ hdfs/
+ln -sf hadoop-${version} hdfs
+ln -sf hadoop-native-${version} hadoop-native
 
 # Have single conf dir
 rm -rf $ROOT_DIR/hdfs/etc/hadoop/

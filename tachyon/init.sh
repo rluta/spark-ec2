@@ -15,18 +15,24 @@ then
 # Pre-package tachyon version
 else
   case "$TACHYON_VERSION" in
+    1.2.0)
+      name=alluxio
+      ;;
     *)
-     wget https://s3.amazonaws.com/gedatalab/binaries/tachyon-$TACHYON_VERSION-bin.tar.gz
-      if [ $? != 0 ]; then
-        echo "ERROR: Unknown Tachyon version"
-        return -1
-      fi
+      name=tachyon
+      ;;
   esac
 
+  wget https://s3.amazonaws.com/gedatalab/binaries/$name-$TACHYON_VERSION-hadoop${HADOOP_MAJOR_VERSION}-bin.tar.gz
+  if [ $? != 0 ]; then
+    echo "ERROR: Unknown Tachyon version"
+    return -1
+  fi
+
   echo "Unpacking Tachyon"
-  tar xvzf tachyon-*.tar.gz > /tmp/spark-ec2_tachyon.log
-  rm tachyon-*.tar.gz
-  mv `ls -d tachyon-*` tachyon
+  tar xvzf $name-*.tar.gz > /tmp/spark-ec2_tachyon.log
+  rm $name-*.tar.gz
+  mv $(ls -d $name-*) tachyon
 fi
 
 popd > /dev/null

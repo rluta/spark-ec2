@@ -17,9 +17,13 @@ if [ -d conf/interpreters ]
 then
     echo "Waiting for zeppelin to start..."
     sleep 10
+    # Delete default spark interpreter settings
+    sparkid=$(curl -s http://localhost:8080/api/interpreter/setting | jq -r '.body[]| select(.name == "spark") |.id')
+    curl -s -XDELETE http://localhost:8080/api/interpreter/setting/$sparkid
+
+    # Update based on provided configs
     for interpreter in conf/interpreters/*
     do
-        echo curl -s -XPOST --data-binary @${interpreter} http://localhost:8080/api/interpreter/setting
         curl -s -XPOST --data-binary @${interpreter} http://localhost:8080/api/interpreter/setting
     done
 fi
