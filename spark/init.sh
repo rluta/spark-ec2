@@ -36,7 +36,7 @@ else
   echo "Unpacking Spark"
   tar xvzf spark*.tar.gz > /tmp/spark-ec2_spark.log
   rm spark*.tar.gz
-  ln -sf $(ls -d spark*-* | grep -v ec2) spark
+  mv $(ls -d spark*-* | grep -v ec2) spark
 fi
 
 popd > /dev/null

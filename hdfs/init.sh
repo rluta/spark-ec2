@@ -33,7 +33,7 @@ echo "Unpacking Hadoop"
 tar xvzf hadoop-*.tar.gz > /tmp/spark-ec2_hadoop.log
 rm hadoop-*.tar.gz
 mv hadoop-${version} hdfs
-ln -s hadoop-native-${version} hadoop-native
+mv hadoop-native-${version} hadoop-native
 
 # Have single conf dir
 rm -rf $ROOT_DIR/hdfs/etc/hadoop/
