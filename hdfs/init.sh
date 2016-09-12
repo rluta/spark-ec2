@@ -32,8 +32,8 @@ wget https://s3.amazonaws.com/gedatalab/binaries/hadoop-${version}.tar.gz
 echo "Unpacking Hadoop"
 tar xvzf hadoop-*.tar.gz > /tmp/spark-ec2_hadoop.log
 rm hadoop-*.tar.gz
-ln -sf hadoop-${version} hdfs
-ln -sf hadoop-native-${version} hadoop-native
+mv hadoop-${version} hdfs
+ln -s hadoop-native-${version} hadoop-native
 
 # Have single conf dir
 rm -rf $ROOT_DIR/hdfs/etc/hadoop/
