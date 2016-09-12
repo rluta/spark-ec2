@@ -2,15 +2,16 @@
 
 pushd /root/zeppelin >/dev/null
 
-# Delete default spark interpreter settings
-echo "Removing default spark interpreter"
-sparkid=$(curl -s http://localhost:8080/api/interpreter/setting | jq -r '.body[]| select(.name == "spark") |.id')
-curl -s -XDELETE http://localhost:8080/api/interpreter/setting/$sparkid
-
 # Update based on provided configs
 for interpreter in $*
 do
-    echo "Creating $interpreter"
+    id=$(curl -s http://localhost:8080/api/interpreter/setting | jq -r ".body[]| select(.name == '$interpreter') |.id")
+    if [ ! -z "$id" ]; then
+        echo "Removing previous interpreter $interpreter ($id)"
+        curl -s -XDELETE http://localhost:8080/api/interpreter/setting/$sparkid
+    fi
+
+    echo "Creating new $interpreter"
     int_file="conf/interpreters/${interpreter}.json"
     if [ -f "$int_file" ]
     then

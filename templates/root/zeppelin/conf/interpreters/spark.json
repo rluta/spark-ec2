@@ -5,7 +5,7 @@
   "properties": {
     "spark.executor.memory": "10G",
     "spark.cores.max": "56",
-    "spark.app.name": "Zeppelin"
+    "spark.app.name": "Zeppelin",
     "zeppelin.spark.printREPLOutput": "true",
     "zeppelin.dep.additionalRemoteRepository": "spark-packages,http://dl.bintray.com/spark-packages/maven,false;",
     "zeppelin.spark.importImplicit": "true",
