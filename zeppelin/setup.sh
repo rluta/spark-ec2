@@ -7,6 +7,10 @@ then
     cp -f /root/spark-ec2/zeppelin/conf/* conf/
 fi
 
+mode=${ZEPPELIN_MODE:-s3}
+mv conf/zeppelin-site.$mode.xml conf/zeppelin-site.xml
+/root/spark-ec2/zeppelin/setup-repo.sh
+
 mkdir -p /mnt/hdfs/s3
 chmod 777 /mnt/hdfs/s3
 chown -R zeppelin .

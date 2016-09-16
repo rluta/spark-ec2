@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+        against=HEAD
+else
+        # Initial commit: diff against an empty tree object
+        against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+
+function extract_spark {
+   notebook=$1
+   dir=$(dirname $notebook)
+   md_extract='.paragraphs | [.[].text | select (. != null) | select (startswith("%md"))] | .[0] | .[3:]'
+   spark_extract='.paragraphs[] | .text | select (. != null) | select(test("^([^%]|%spark)")) | gsub("%spark\\w*";"")'
+   pyspark_extract='.paragraphs[] | .text | select (. != null) | select(test("^%pyspark")) | gsub("%pyspark\\w*";"")'
+
+   if [ -r ${notebook} ]; then
+       readme=$(jq -r "${md_extract}" $notebook)
+       scala=$(jq -r "${spark_extract}" $notebook)
+       python=$(jq -r "${pyspark_extract}" $notebook)
+       if [ ! -z "$readme" ]; then
+           echo "$readme" >  $dir/README.md
+       fi
+       if [ ! -z "$scala" ]; then
+           echo "$scala" >  $dir/note.scala
+       fi
+       if [ ! -z "$python" ]; then
+           echo "$python" >  $dir/note.py
+       fi
+   fi
+}
+
+# Identify modified notebooks
+modified_notebooks=$(git diff --cached --name-only --diff-filter=AM $against | egrep .json$)
+
+# For each, extract code to scala file in same directory
+for notebook in ${modified_notebooks}
+do
+    extract_spark ${notebook}
+    git add $(dirname $notebook)
+done
