@@ -1,5 +1,19 @@
 #!/bin/bash
 
 cd $1
+
+function listNotebooks {
+    for notebook in $(find . -name '*.json')
+    do
+        title=$(jq -r '.name' $notebook)
+        id=$(basename $(dirname $notebook))
+        echo "$title ---- $id"
+    done
+}
+
+echo "# Notebook list" > README.md
+echo >> README.md
+listNotebooks | sort | sed -e 's/\(.*\) ---- \(.*\)/ * [\1 - \2](.\/\2\/)/' >> README.md
+
 git add *
 git commit -m "auto-commit cron"

@@ -16,11 +16,12 @@ function extract_spark {
    pyspark_extract='.paragraphs[] | .text | select (. != null) | select(test("^%pyspark")) | gsub("%pyspark\\w*";"")'
 
    if [ -r ${notebook} ]; then
+       title=$(jq -r '.name' $notebook)
        readme=$(jq -r "${md_extract}" $notebook)
        scala=$(jq -r "${spark_extract}" $notebook)
        python=$(jq -r "${pyspark_extract}" $notebook)
        if [ ! -z "$readme" ]; then
-           echo "$readme" >  $dir/README.md
+           echo "# $title\n\n$readme" >  $dir/README.md
        fi
        if [ ! -z "$scala" ]; then
            echo "$scala" >  $dir/note.scala

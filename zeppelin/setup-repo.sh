@@ -21,6 +21,6 @@ chmod 755 /root/notebook/.git/hooks/*
 
 cp -r /root/spark-ec2/zeppelin/cron/* /usr/local/bin/
 cp /root/spark-ec2/zeppelin/zeppelin /etc/cron.d/
-killall -1 cron
+killall -1 crond
 
 popd >/dev/null
