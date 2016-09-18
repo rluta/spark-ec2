@@ -1,0 +1,5 @@
+SHELL=/bin/bash
+HOME=/root/notebook
+
+*/5 * * * * zeppelin    /root/notebook/.git/hooks/post-commit
+0 4 * * *   zeppelin    /usr/local/bin/autocommit /root/notebook
