@@ -90,6 +90,7 @@ template_vars = {
   "scala_version": os.getenv("SCALA_VERSION"),
   "tachyon_version": os.getenv("TACHYON_VERSION"),
   "zeppelin_version": os.getenv("ZEPPELIN_VERSION"),
+  "pipeline_version": os.getenv("PIPELINE_VERSION"),
   "hadoop_major_version": os.getenv("HADOOP_MAJOR_VERSION"),
   "java_home": os.getenv("JAVA_HOME"),
   "default_tachyon_mem": "%dMB" % tachyon_mb,
