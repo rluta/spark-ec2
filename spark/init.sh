@@ -39,4 +39,6 @@ else
   mv $(ls -d spark*-* | grep -v ec2) spark
 fi
 
+chmod 1777 /mnt*/spark
+
 popd > /dev/null
