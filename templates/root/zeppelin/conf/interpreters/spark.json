@@ -51,14 +51,6 @@
       "groupArtifactVersion": "info.debatty:java-string-similarity:0.13",
       "local": false,
       "exclusions": []
-    },
-    {
-      "groupArtifactVersion": "com.databricks:spark-csv_{{scala_version}}:1.4.0",
-      "local": false,
-      "exclusions": [
-        "org.scala-lang:scala-library",
-        "org.apache.spark:spark-sql_{{scala_version}}"
-      ]
     }
   ],
   "option": {
