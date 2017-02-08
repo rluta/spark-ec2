@@ -38,6 +38,7 @@ modified_notebooks=$(git diff --cached --name-only --diff-filter=AM $against | e
 # For each, extract code to scala file in same directory
 for notebook in ${modified_notebooks}
 do
+    echo "Updating $notebook"
     extract_spark ${notebook}
     git add $(dirname $notebook)
 done
