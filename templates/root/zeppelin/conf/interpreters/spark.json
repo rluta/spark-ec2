@@ -1,0 +1,179 @@
+{
+  "id": "2CBE87C6P",
+  "name": "spark",
+  "properties": {
+    "spark.executor.memory": {
+      "propertyName": "spark.executor.memory",
+      "defaultValue": "",
+      "description": "Executor memory per worker instance. ex) 512m, 32g"
+    },
+    "args": {
+      "defaultValue": "",
+      "description": "spark commandline args"
+    },
+    "zeppelin.spark.useHiveContext": {
+      "envName": "ZEPPELIN_SPARK_USEHIVECONTEXT",
+      "propertyName": "zeppelin.spark.useHiveContext",
+      "defaultValue": "true",
+      "description": "Use HiveContext instead of SQLContext if it is true."
+    },
+    "spark.app.name": {
+      "envName": "SPARK_APP_NAME",
+      "propertyName": "spark.app.name",
+      "defaultValue": "Zeppelin",
+      "description": "The name of spark application."
+    },
+    "zeppelin.spark.printREPLOutput": {
+      "defaultValue": "true",
+      "description": "Print REPL output"
+    },
+    "spark.cores.max": {
+      "propertyName": "spark.cores.max",
+      "defaultValue": "",
+      "description": "Total number of cores to use. Empty value uses all available core."
+    },
+    "zeppelin.spark.maxResult": {
+      "envName": "ZEPPELIN_SPARK_MAXRESULT",
+      "propertyName": "zeppelin.spark.maxResult",
+      "defaultValue": "1000",
+      "description": "Max number of Spark SQL result to display."
+    },
+    "master": {
+      "envName": "MASTER",
+      "propertyName": "spark.master",
+      "defaultValue": "{{spark_cluster_url}}",
+      "description": "Spark master uri. ex) spark://masterhost:7077"
+    },
+    "zeppelin.spark.concurrentSQL": {
+      "envName": "ZEPPELIN_SPARK_CONCURRENTSQL",
+      "propertyName": "zeppelin.spark.concurrentSQL",
+      "defaultValue": "false",
+      "description": "Execute multiple SQL concurrently if set true."
+    },
+    "zeppelin.spark.sql.stacktrace": {
+      "envName": "ZEPPELIN_SPARK_SQL_STACKTRACE",
+      "propertyName": "zeppelin.spark.sql.stacktrace",
+      "defaultValue": "false",
+      "description": "Show full exception stacktrace for SQL queries if set to true."
+    },
+    "zeppelin.spark.importImplicit": {
+      "envName": "ZEPPELIN_SPARK_IMPORTIMPLICIT",
+      "propertyName": "zeppelin.spark.importImplicit",
+      "defaultValue": "true",
+      "description": "Import implicits, UDF collection, and sql if set true. true by default."
+    },
+    "zeppelin.dep.localrepo": {
+      "envName": "ZEPPELIN_DEP_LOCALREPO",
+      "defaultValue": "local-repo",
+      "description": "local repository for dependency loader"
+    },
+    "zeppelin.dep.additionalRemoteRepository": {
+      "defaultValue": "spark-packages,http://dl.bintray.com/spark-packages/maven,false;",
+      "description": "A list of 'id,remote-repository-URL,is-snapshot;' for each remote repository."
+    },
+    "zeppelin.pyspark.python": {
+      "envName": "PYSPARK_PYTHON",
+      "defaultValue": "python",
+      "description": "Python command to run pyspark with"
+    },
+    "zeppelin.R.knitr": {
+      "envName": "ZEPPELIN_R_KNITR",
+      "propertyName": "zeppelin.R.knitr",
+      "defaultValue": "true",
+      "description": "whether use knitr or not"
+    },
+    "zeppelin.R.cmd": {
+      "envName": "ZEPPELIN_R_CMD",
+      "propertyName": "zeppelin.R.cmd",
+      "defaultValue": "R",
+      "description": "R repl path"
+    },
+    "zeppelin.R.image.width": {
+      "envName": "ZEPPELIN_R_IMAGE_WIDTH",
+      "propertyName": "zeppelin.R.image.width",
+      "defaultValue": "100%",
+      "description": ""
+    },
+    "zeppelin.R.render.options": {
+      "envName": "ZEPPELIN_R_RENDER_OPTIONS",
+      "propertyName": "zeppelin.R.render.options",
+      "defaultValue": "out.format = 'html', comment = NA, echo = FALSE, results = 'asis', message = F, warning = F",
+      "description": ""
+    }
+  },
+  "status": "READY",
+  "interpreterGroup": [
+    {
+      "name": "spark",
+      "class": "org.apache.zeppelin.spark.SparkInterpreter",
+      "defaultInterpreter": true,
+      "editor": {
+        "language": "scala"
+      }
+    },
+    {
+      "name": "sql",
+      "class": "org.apache.zeppelin.spark.SparkSqlInterpreter",
+      "defaultInterpreter": false,
+      "editor": {
+        "language": "sql"
+      }
+    },
+    {
+      "name": "dep",
+      "class": "org.apache.zeppelin.spark.DepInterpreter",
+      "defaultInterpreter": false,
+      "editor": {
+        "language": "scala"
+      }
+    },
+    {
+      "name": "pyspark",
+      "class": "org.apache.zeppelin.spark.PySparkInterpreter",
+      "defaultInterpreter": false,
+      "editor": {
+        "language": "python"
+      }
+    },
+    {
+      "name": "r",
+      "class": "org.apache.zeppelin.spark.SparkRInterpreter",
+      "defaultInterpreter": false,
+      "editor": {
+        "language": "r"
+      }
+    }
+  ],
+  "dependencies": [
+   {
+      "groupArtifactVersion": "org.elasticsearch:elasticsearch-spark_{{scala_version}}:2.3.2",
+      "local": false,
+      "exclusions": [
+        "org.scala-lang:scala-library",
+        "org.apache.spark:spark-sql_{{scala_version}}"
+      ]
+    },
+    {
+      "groupArtifactVersion": "com.databricks:spark-csv_{{scala_version}}:1.4.0",
+      "local": false,
+      "exclusions": [
+        "org.scala-lang:scala-library",
+        "org.apache.spark:spark-sql_{{scala_version}}"
+      ]
+    },
+    {
+      "groupArtifactVersion": "info.debatty:java-string-similarity:0.13",
+      "local": false,
+      "exclusions": []
+    }
+  ],
+  "option": {
+    "remote": true,
+    "port": -1,
+    "perNote": "shared",
+    "perUser": "shared",
+    "isExistingProcess": false,
+    "setPermission": false,
+    "isUserImpersonate": false
+  }
+}

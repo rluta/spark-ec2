@@ -23,6 +23,9 @@ function create_temp_dirs {
   chmod a+w $location
 }
 
+R -e "install.packages(c('devtools','knitr','ggplot2','mplot', 'googleVis'), repos = 'http://cran.us.r-project.org')"
+R -e "install.packages(c('data.table','gmlnet','sqldf','pROC', 'wordcloud'), repos = 'http://cran.us.r-project.org')"
+
 create_temp_dirs /mnt/spark
 create_temp_dirs /mnt2/spark
 create_temp_dirs /mnt3/spark
