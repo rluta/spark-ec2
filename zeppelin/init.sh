@@ -35,7 +35,8 @@ then
   echo "Zeppelin git hashes are not yet supported. Please specify a Zeppelin release version."
 # Pre-package zeppelin version
 else
-  wget https://fastdata-binaries.s3.amazonaws.com/zeppelin-${ZEPPELIN_VERSION}-${SPARK_VERSION}.tar.gz
+  wget -O zeppelin-${ZEPPELIN_VERSION}-${SPARK_VERSION}.tar.gz http://apache.crihan.fr/dist/zeppelin/zeppelin-${ZEPPELIN_VERSION}/zeppelin-${ZEPPELIN_VERSION}-bin-all.tgz
+  #wget https://fastdata-binaries.s3.amazonaws.com/zeppelin-${ZEPPELIN_VERSION}-${SPARK_VERSION}.tar.gz
   if [ $? != 0 ]; then
     echo "ERROR: Unknown Zeppelin version"
     return -1
@@ -44,7 +45,10 @@ else
   echo "Unpacking Zeppelin"
   tar xvzf zeppelin-*.tar.gz > /tmp/spark-ec2_zeppelin.log
   rm zeppelin-*.tar.gz
-  (cd zeppelin && tar cvf /tmp/zeppelin.tar .)
+  if [ -d zeppelin/ ]
+  then
+    (cd zeppelin && tar cvf /tmp/zeppelin.tar .)
+  fi 
   rm -rf zeppelin
   ln -sf $(ls -d zeppelin-*) zeppelin
   (cd zeppelin && tar xvf /tmp/zeppelin.tar)
