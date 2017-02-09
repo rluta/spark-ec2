@@ -35,7 +35,7 @@ then
   echo "Zeppelin git hashes are not yet supported. Please specify a Zeppelin release version."
 # Pre-package zeppelin version
 else
-  wget https://s3.amazonaws.com/gedatalab/binaries/zeppelin-${ZEPPELIN_VERSION}-${SPARK_VERSION}.tar.gz
+  wget https://fastdata-binaries.s3.amazonaws.com/zeppelin-${ZEPPELIN_VERSION}-${SPARK_VERSION}.tar.gz
   if [ $? != 0 ]; then
     echo "ERROR: Unknown Zeppelin version"
     return -1

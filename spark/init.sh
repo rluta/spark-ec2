@@ -26,7 +26,7 @@ then
 else 
   case "$SPARK_VERSION" in
     *)
-      wget https://s3.amazonaws.com/gedatalab/binaries/spark_${SCALA_VERSION}-${SPARK_VERSION}.tar.gz
+      wget https://fastdata-binaries.s3.amazonaws.com/spark_${SCALA_VERSION}-${SPARK_VERSION}.tar.gz
       if [ $? != 0 ]; then
         echo "ERROR: Unknown Spark version"
         return -1
